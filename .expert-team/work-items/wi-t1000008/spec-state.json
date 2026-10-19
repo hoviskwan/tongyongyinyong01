@@ -2,14 +2,41 @@
   "schemaVersion": 2,
   "specId": "general-application-development-spec",
   "specRevision": 14,
-  "state": "requirements_ready",
-  "revision": 1,
+  "state": "design_ready",
+  "revision": 2,
   "completedActions": [
-    "requirements"
+    "requirements",
+    "design"
   ],
   "blockers": [],
   "deliveryProfile": "standard",
   "graphRevision": 5,
   "graphHash": "sha256:f3c5d7536f6fb3b63cb991188f689e9748f360a443955a70fe96d3f2cc9cabd0",
-  "updatedAt": "2026-10-19T04:46:27.937Z"
+  "updatedAt": "2026-10-19T04:49:26.424Z",
+  "applicationProfile": {
+    "schemaVersion": 1,
+    "applicationType": "simple-frontend",
+    "source": {
+      "artifactPath": "docs/wi-t1000008/requirements.md",
+      "sha256": "sha256:e4bb3cabb3653e5b319124d17cb622a28e6f986c823f0f0b4cedab3a1b4a5eb5"
+    },
+    "reason": "需求基线明确数据使用本地状态管理、不依赖后端服务；单用户 CRUD 应用，无服务端权威数据、认证/权限、后台任务、外部服务或跨用户/设备共享要求。",
+    "evidence": {
+      "supporting": [
+        "requirements.md 第 15 行：数据使用本地状态管理，不依赖后端服务（用户明确提出）",
+        "requirements.md 第 59 行：刷新页面或重开后的数据保留情况未规定，不作为验收要求",
+        "AC-01~AC-06 均为本地 UI 交互验收，无服务端、认证、后台任务、外部集成或共享数据要求"
+      ],
+      "excluding": [
+        "无服务端权威数据要求：无 API、无持久化数据库要求",
+        "无认证/权限体系要求",
+        "无后台任务要求",
+        "无外部服务集成要求",
+        "无跨用户/设备共享数据要求"
+      ],
+      "unresolved": []
+    },
+    "decidedAt": "2026-10-19T04:48:40.744Z",
+    "sha256": "sha256:3f98e6e1afef451bf58a672b22c25afaa47fb61629e25aff17e506fccdffed8b"
+  }
 }

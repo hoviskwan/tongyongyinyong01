@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 2,
+  "receiptId": "design:2",
+  "receiptType": "architecture-plan",
+  "specId": "general-application-development-spec",
+  "graphRevision": 5,
+  "actionId": "design",
+  "inputRevision": 1,
+  "stateVersion": 2,
+  "outcome": "passed",
+  "contentHash": "sha256:1f63640dd868a7de191ece6bd5443d5ad4b5d0a87d56fce4a5852b5f37a33d27",
+  "createdAt": "2026-10-19T04:49:26.424Z",
+  "timing": {
+    "startedAt": "2026-10-19T04:48:17.715Z",
+    "completedAt": "2026-10-19T04:49:26.423Z",
+    "durationMs": 68708
+  },
+  "artifacts": [
+    {
+      "path": "docs/wi-t1000008/architecture-baseline.md",
+      "bytes": 3155,
+      "sha256": "sha256:2b2203c0d263283bc0a6db5f149b6a31c6306bf6d967708a03d09c75125d35fc",
+      "title": "轻量库存管理应用 · 架构基线"
+    }
+  ],
+  "verification": [
+    {
+      "checkId": "design:completion",
+      "status": "passed"
+    },
+    {
+      "checkId": "design:application-route",
+      "status": "passed",
+      "applicationProfile": {
+        "applicationType": "simple-frontend",
+        "routeId": "compact",
+        "sha256": "sha256:3f98e6e1afef451bf58a672b22c25afaa47fb61629e25aff17e506fccdffed8b",
+        "path": ".expert-team/work-items/wi-t1000008/spec-state.json#/applicationProfile"
+      }
+    }
+  ]
+}
