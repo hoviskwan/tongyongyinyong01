@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 2,
+  "receiptId": "requirements:1",
+  "receiptType": "requirements-baseline",
+  "specId": "general-application-development-spec",
+  "graphRevision": 5,
+  "actionId": "requirements",
+  "inputRevision": 0,
+  "stateVersion": 1,
+  "outcome": "passed",
+  "contentHash": "sha256:8815a561449026a56a70fa4e12e884261ee94ce16d56b78a8bfc38d76b9b0ff4",
+  "createdAt": "2026-10-19T04:46:27.937Z",
+  "timing": {
+    "startedAt": "2026-10-19T04:44:36.492Z",
+    "completedAt": "2026-10-19T04:46:27.937Z",
+    "durationMs": 111445
+  },
+  "artifacts": [
+    {
+      "path": "docs/wi-t1000008/requirements.md",
+      "bytes": 8095,
+      "sha256": "sha256:e4bb3cabb3653e5b319124d17cb622a28e6f986c823f0f0b4cedab3a1b4a5eb5",
+      "title": "轻量库存管理应用 · 需求基线"
+    }
+  ],
+  "verification": [
+    {
+      "checkId": "requirements:completion",
+      "status": "passed"
+    }
+  ]
+}

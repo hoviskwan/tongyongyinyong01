@@ -1,0 +1,11 @@
+{
+  "workItemId": "wi-t1000008",
+  "applicationId": "application",
+  "workItemType": "initial-build",
+  "title": "请在当前 Session 中完成这个 IssueTask，按指定的连续阶段范围执行：requirements。\n业务任务：轻量库存管理应用\n\n帮我开发一个“轻量库存管理”React 应用。物料列表展示编码、名称、分类、当前库存和安全库存，支持搜索与低库存筛选；提供入库、出库登记表单，提交后自动更新库存并生成库存流水；首页展示物料总数、库存总量和预警数量。数据使用本地状态管理。",
+  "request": "请在当前 Session 中完成这个 IssueTask，按指定的连续阶段范围执行：requirements。\n业务任务：轻量库存管理应用\n\n帮我开发一个“轻量库存管理”React 应用。物料列表展示编码、名称、分类、当前库存和安全库存，支持搜索与低库存筛选；提供入库、出库登记表单，提交后自动更新库存并生成库存流水；首页展示物料总数、库存总量和预警数量。数据使用本地状态管理。",
+  "status": "active",
+  "specId": "general-application-development-spec",
+  "revision": 0,
+  "createdAt": "2026-10-19T04:44:36.413Z"
+}
