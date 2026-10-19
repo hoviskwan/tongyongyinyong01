@@ -1,0 +1,321 @@
+{
+  "decision": "pass",
+  "summary": {
+    "objective": "对轻量库存管理 React 应用执行 verification 阶段验收，覆盖 AC-01~AC-06 全部冻结验收条件",
+    "changedBehavior": "新建轻量库存管理 React/Vite SPA：物料列表五字段展示、新增物料、搜索与低库存筛选、入库/出库登记自动更新库存并生成流水、首页三项统计、localStorage 本地状态管理",
+    "nonGoals": [
+      "编辑/删除物料",
+      "导入导出",
+      "多仓库",
+      "审批流",
+      "服务端与跨设备共享"
+    ],
+    "riskLabels": [
+      "browser-ui"
+    ]
+  },
+  "environment": {
+    "name": "轻量库存管理（React 18 + Vite 5 SPA，localhost:5173 开发服务）",
+    "version": "wi-t1000008 implementation 交付版本",
+    "dataProfile": "初始 5 个示例物料（2 个低库存）；验收中新增 TEST-9001，多次出入库登记；localStorage 持久化"
+  },
+  "verification": [
+    {
+      "checkId": "QA-01",
+      "type": "browser-ui",
+      "status": "passed",
+      "plan": [
+        {
+          "requirementId": "AC-01",
+          "kind": "runtime-render",
+          "action": "在已存在若干物料（其中至少一个当前库存低于安全库存）时打开首页，记录三个数值；新增一个物料，再通过一次出库使另一物料当前库存降至安全库存以下，再次查看首页。",
+          "expected": "物料总数等于物料条目数量；库存总量等于各物料当前库存之和；预警数量等于当前库存低于安全库存的物料数；上述变更后三个数值同步变为正确值。"
+        }
+      ],
+      "evidence": "浏览器实测：初始 5 物料/库存总量 953/预警 2；新增低库存物料 TEST-9001 后实时变为 6/963/3；出库使 MAT-1001 降至 70（低于安全库存 100）后实时变为 6/713/4；数据变化后统计口径仍一致（6/1018/2），三数值均由物料数据实时派生。",
+      "observation": {
+        "method": "browser",
+        "actor": "expert",
+        "reference": "本轮浏览器实测 http://localhost:5173/ 2026-10-19 13:02-13:10"
+      },
+      "assertions": [
+        {
+          "requirementId": "AC-01",
+          "kind": "runtime-render",
+          "action": "在已存在若干物料（其中至少一个当前库存低于安全库存）时打开首页，记录三个数值；新增一个物料，再通过一次出库使另一物料当前库存降至安全库存以下，再次查看首页。",
+          "expected": "物料总数等于物料条目数量；库存总量等于各物料当前库存之和；预警数量等于当前库存低于安全库存的物料数；上述变更后三个数值同步变为正确值。",
+          "actual": "初始 5/953/2 → 新增物料后 6/963/3 → 出库后 6/713/4，物料总数=条目数、库存总量=当前库存之和、预警=低于安全库存物料数，均实时同步且口径正确",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "checkId": "QA-02",
+      "type": "browser-ui",
+      "status": "passed",
+      "plan": [
+        {
+          "requirementId": "AC-02",
+          "kind": "runtime-render",
+          "action": "打开物料列表，逐字段核对已有物料的展示；通过新增物料入口录入编码、名称、分类、安全库存与初始当前库存并提交；再用一个已存在的编码重复提交。",
+          "expected": "列表逐行展示五个字段且与数据一致；新物料提交后出现在列表中，各字段值正确；重复编码被拒绝并给出提示，列表不出现重复条目。"
+        },
+        {
+          "requirementId": "AC-02",
+          "kind": "interaction",
+          "action": "打开物料列表，逐字段核对已有物料的展示；通过新增物料入口录入编码、名称、分类、安全库存与初始当前库存并提交；再用一个已存在的编码重复提交。",
+          "expected": "列表逐行展示五个字段且与数据一致；新物料提交后出现在列表中，各字段值正确；重复编码被拒绝并给出提示，列表不出现重复条目。"
+        }
+      ],
+      "evidence": "浏览器实测：物料表逐行展示编码/名称/分类/当前库存/安全库存五列且与数据一致；新增 TEST-9001（测试物料QA/测试分类/安全库存 50/初始库存 10）提交后立即出现在列表且字段正确；以已存在编码 TEST-9001 重复提交被拒绝并提示「物料编码『TEST-9001』已存在，请更换编码」，列表保持 6 条无重复条目。",
+      "observation": {
+        "method": "browser",
+        "actor": "expert",
+        "reference": "本轮浏览器实测 http://localhost:5173/ 2026-10-19 13:02-13:10"
+      },
+      "assertions": [
+        {
+          "requirementId": "AC-02",
+          "kind": "runtime-render",
+          "action": "打开物料列表，逐字段核对已有物料的展示；通过新增物料入口录入编码、名称、分类、安全库存与初始当前库存并提交；再用一个已存在的编码重复提交。",
+          "expected": "列表逐行展示五个字段且与数据一致；新物料提交后出现在列表中，各字段值正确；重复编码被拒绝并给出提示，列表不出现重复条目。",
+          "actual": "列表逐行五字段与数据一致；新物料 TEST-9001 提交后立即出现在列表，各字段值正确",
+          "status": "passed"
+        },
+        {
+          "requirementId": "AC-02",
+          "kind": "interaction",
+          "action": "打开物料列表，逐字段核对已有物料的展示；通过新增物料入口录入编码、名称、分类、安全库存与初始当前库存并提交；再用一个已存在的编码重复提交。",
+          "expected": "列表逐行展示五个字段且与数据一致；新物料提交后出现在列表中，各字段值正确；重复编码被拒绝并给出提示，列表不出现重复条目。",
+          "actual": "重复编码提交被拒绝并给出明确提示，列表无重复条目",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "checkId": "QA-03",
+      "type": "browser-ui",
+      "status": "passed",
+      "plan": [
+        {
+          "requirementId": "AC-03",
+          "kind": "interaction",
+          "action": "在搜索输入中输入某物料编码（或名称、分类）的关键词；清除搜索后启用低库存筛选；再取消筛选。",
+          "expected": "搜索后列表仅显示匹配该关键词的物料；低库存筛选后列表仅显示当前库存低于安全库存的物料；取消筛选后恢复显示全部物料。"
+        }
+      ],
+      "evidence": "浏览器实测：搜索框输入 ELE 后列表仅剩 ELE-2001、ELE-2002 两条；清除搜索后恢复全部 6 条；勾选「仅看低库存」后仅显示 ELE-2002、TEST-9001（当前库存 8<10、10<50）；取消勾选恢复全部 6 条。",
+      "observation": {
+        "method": "browser",
+        "actor": "expert",
+        "reference": "本轮浏览器实测 http://localhost:5173/ 2026-10-19 13:02-13:10"
+      },
+      "assertions": [
+        {
+          "requirementId": "AC-03",
+          "kind": "interaction",
+          "action": "在搜索输入中输入某物料编码（或名称、分类）的关键词；清除搜索后启用低库存筛选；再取消筛选。",
+          "expected": "搜索后列表仅显示匹配该关键词的物料；低库存筛选后列表仅显示当前库存低于安全库存的物料；取消筛选后恢复显示全部物料。",
+          "actual": "搜索 ELE 仅显示 2 条匹配物料；清除后恢复 6 条；低库存筛选仅显示 2 条低于安全库存物料；取消筛选恢复全部 6 条",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "checkId": "QA-04",
+      "type": "browser-ui",
+      "status": "passed",
+      "plan": [
+        {
+          "requirementId": "AC-04",
+          "kind": "interaction",
+          "action": "记录某物料当前库存原值；在入库登记中选择该物料、填写数量并提交；查看该物料的当前库存与库存流水。",
+          "expected": "该物料当前库存 = 原值 + 入库数量；库存流水中新增一条类型为\"入库\"的记录，包含该物料、入库数量与发生时间。"
+        }
+      ],
+      "evidence": "浏览器实测：入库 ELE-2001 数量 25 后当前库存 45→70 并生成一条入库流水；复证使用键盘回车提交入库 MAT-1001 数量 3，库存 70→73、流水条数 40→41 精确增加 1 条，无重复生成。",
+      "observation": {
+        "method": "browser",
+        "actor": "expert",
+        "reference": "本轮浏览器实测 http://localhost:5173/ 2026-10-19 13:02-13:10"
+      },
+      "assertions": [
+        {
+          "requirementId": "AC-04",
+          "kind": "interaction",
+          "action": "记录某物料当前库存原值；在入库登记中选择该物料、填写数量并提交；查看该物料的当前库存与库存流水。",
+          "expected": "该物料当前库存 = 原值 + 入库数量；库存流水中新增一条类型为\"入库\"的记录，包含该物料、入库数量与发生时间。",
+          "actual": "入库后当前库存 = 原值 + 入库数量（ELE-2001 45→70；MAT-1001 回车提交 70→73），流水新增一条类型为入库的记录，含物料、数量与发生时间",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "checkId": "QA-05",
+      "type": "browser-ui",
+      "status": "passed",
+      "plan": [
+        {
+          "requirementId": "AC-05",
+          "kind": "interaction",
+          "action": "记录某物料当前库存原值；在出库登记中选择该物料、填写不超过当前库存的数量并提交，查看库存与流水；再填写一个超过当前库存的数量提交。",
+          "expected": "正常出库后当前库存 = 原值 − 出库数量，流水新增一条类型为\"出库\"的记录（含物料、数量、时间）；超量提交被阻止并出现明确提示，当前库存保持原值且不产生新流水。"
+        },
+        {
+          "requirementId": "AC-05",
+          "kind": "error-feedback",
+          "action": "记录某物料当前库存原值；在出库登记中选择该物料、填写不超过当前库存的数量并提交，查看库存与流水；再填写一个超过当前库存的数量提交。",
+          "expected": "正常出库后当前库存 = 原值 − 出库数量，流水新增一条类型为\"出库\"的记录（含物料、数量、时间）；超量提交被阻止并出现明确提示，当前库存保持原值且不产生新流水。"
+        }
+      ],
+      "evidence": "浏览器实测：出库 MAT-1001 数量 250 后当前库存 320→70 并生成一条出库流水；超量出库 ELE-2002 数量 100（当前库存 8）被阻止并提示「出库数量超过『ELE-2002 PLC 控制器』的当前库存（8），已阻止本次出库」，库存保持 8、流水条数 55→55 不变。",
+      "observation": {
+        "method": "browser",
+        "actor": "expert",
+        "reference": "本轮浏览器实测 http://localhost:5173/ 2026-10-19 13:02-13:10"
+      },
+      "assertions": [
+        {
+          "requirementId": "AC-05",
+          "kind": "interaction",
+          "action": "记录某物料当前库存原值；在出库登记中选择该物料、填写不超过当前库存的数量并提交，查看库存与流水；再填写一个超过当前库存的数量提交。",
+          "expected": "正常出库后当前库存 = 原值 − 出库数量，流水新增一条类型为\"出库\"的记录（含物料、数量、时间）；超量提交被阻止并出现明确提示，当前库存保持原值且不产生新流水。",
+          "actual": "正常出库后当前库存 = 原值 − 出库数量（MAT-1001 320→70），流水新增一条类型为出库的记录（含物料、数量、时间）",
+          "status": "passed"
+        },
+        {
+          "requirementId": "AC-05",
+          "kind": "error-feedback",
+          "action": "记录某物料当前库存原值；在出库登记中选择该物料、填写不超过当前库存的数量并提交，查看库存与流水；再填写一个超过当前库存的数量提交。",
+          "expected": "正常出库后当前库存 = 原值 − 出库数量，流水新增一条类型为\"出库\"的记录（含物料、数量、时间）；超量提交被阻止并出现明确提示，当前库存保持原值且不产生新流水。",
+          "actual": "超量提交被阻止并出现明确提示（含物料编码、名称与当前库存），当前库存保持原值且不产生新流水",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "checkId": "QA-06",
+      "type": "browser-ui",
+      "status": "passed",
+      "plan": [
+        {
+          "requirementId": "AC-06",
+          "kind": "runtime-render",
+          "action": "先后完成至少一次入库和一次出库后，打开库存流水的查看入口。",
+          "expected": "能看到对应的入库与出库流水记录，四个字段完整，物料与数量与实际登记一致。"
+        }
+      ],
+      "evidence": "浏览器实测：库存流水表展示类型/物料/数量/发生时间四列，含入库（ELE-2001×25、MAT-1002×5、MAT-1001×3）与出库（MAT-1001×250、PAK-3001×10）记录，物料与数量与实际登记一致。",
+      "observation": {
+        "method": "browser",
+        "actor": "expert",
+        "reference": "本轮浏览器实测 http://localhost:5173/ 2026-10-19 13:02-13:10"
+      },
+      "assertions": [
+        {
+          "requirementId": "AC-06",
+          "kind": "runtime-render",
+          "action": "先后完成至少一次入库和一次出库后，打开库存流水的查看入口。",
+          "expected": "能看到对应的入库与出库流水记录，四个字段完整，物料与数量与实际登记一致。",
+          "actual": "入库与出库流水记录均可见，四个字段完整，物料与数量与实际登记一致",
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "acceptance": "AC-01: 首页以三个独立数值分别展示物料总数、库存总量、预警数量，口径正确且随数据变动同步更新。; AC-02: 物料列表展示全部物料的编码、名称、分类、当前库存、安全库存；新增物料成功后立即出现在列表中。; AC-03: 物料列表支持按关键词搜索，并支持只查看低库存物料。; AC-04: 选择物料并提交入库数量后，该物料当前库存增加，同时生成一条入库流水。; AC-05: 出库提交后当前库存减少并生成出库流水；出库数量超过当前库存时操作被阻止，库存与流水均不变。; AC-06: 应用内可查看库存流水，每条流水包含类型、物料、数量、发生时间。",
+    "mandatoryAcceptance": [
+      {
+        "id": "AC-01",
+        "source": "requirements.md#AC-01",
+        "surface": "user-interface",
+        "status": "met",
+        "checkIds": [
+          "QA-01"
+        ],
+        "evidenceKinds": [
+          "runtime-render"
+        ],
+        "evidence": "QA-01：三个数值在初始、新增物料后、出库后均口径正确并实时同步（5/953/2 → 6/963/3 → 6/713/4）。"
+      },
+      {
+        "id": "AC-02",
+        "source": "requirements.md#AC-02",
+        "surface": "user-interface",
+        "status": "met",
+        "checkIds": [
+          "QA-02"
+        ],
+        "evidenceKinds": [
+          "runtime-render",
+          "interaction"
+        ],
+        "evidence": "QA-02：列表逐行五字段与数据一致；新增物料立即入列且字段正确；重复编码被拒并提示、无重复条目。"
+      },
+      {
+        "id": "AC-03",
+        "source": "requirements.md#AC-03",
+        "surface": "user-interface",
+        "status": "met",
+        "checkIds": [
+          "QA-03"
+        ],
+        "evidenceKinds": [
+          "interaction"
+        ],
+        "evidence": "QA-03：搜索仅显匹配物料；低库存筛选仅显低于安全库存物料；清除/取消后恢复全部。"
+      },
+      {
+        "id": "AC-04",
+        "source": "requirements.md#AC-04",
+        "surface": "user-interface",
+        "status": "met",
+        "checkIds": [
+          "QA-04"
+        ],
+        "evidenceKinds": [
+          "interaction"
+        ],
+        "evidence": "QA-04：入库后当前库存 = 原值 + 数量，并生成一条入库流水（键盘回车提交精确 +1 条）。"
+      },
+      {
+        "id": "AC-05",
+        "source": "requirements.md#AC-05",
+        "surface": "user-interface",
+        "status": "met",
+        "checkIds": [
+          "QA-05"
+        ],
+        "evidenceKinds": [
+          "interaction",
+          "error-feedback"
+        ],
+        "evidence": "QA-05：正常出库库存减少并生成出库流水；超量出库被阻止并明确提示，库存与流水均不变。"
+      },
+      {
+        "id": "AC-06",
+        "source": "requirements.md#AC-06",
+        "surface": "user-interface",
+        "status": "met",
+        "checkIds": [
+          "QA-06"
+        ],
+        "evidenceKinds": [
+          "runtime-render"
+        ],
+        "evidence": "QA-06：流水表类型/物料/数量/发生时间四字段完整，与实际登记一致。"
+      }
+    ],
+    "riskLabels": [],
+    "verificationTypes": [
+      "browser-ui"
+    ]
+  },
+  "defects": [],
+  "skippedChecks": [],
+  "residualRisks": [
+    "QA 浏览器自动化环境存在按钮点击提交后短时重复触发（一次点击约 10-15 秒内以 1-5 秒间隔重复最后一次提交）及 fill 清空 search 输入框不触发 React onChange 的工具行为；已通过 60 秒静默无增长、源码无定时/循环提交机制、键盘回车与退格均为精确单次操作验证其为环境行为而非应用缺陷。测试数据因此被重复提交污染（ELE-2001=370、MAT-1002=145、PAK-3001=370、流水 55 条），应用在污染数据上统计/过滤/校验口径仍全部一致；建议后续自动化验收改用键盘提交路径。"
+  ],
+  "baselineUpdates": []
+}

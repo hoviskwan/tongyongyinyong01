@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "acceptance": [
+    {
+      "id": "AC-01",
+      "source": "requirements.md#AC-01",
+      "surface": "user-interface",
+      "evidenceKinds": [
+        "runtime-render"
+      ],
+      "checkIds": [
+        "QA-01"
+      ]
+    },
+    {
+      "id": "AC-02",
+      "source": "requirements.md#AC-02",
+      "surface": "user-interface",
+      "evidenceKinds": [
+        "runtime-render",
+        "interaction"
+      ],
+      "checkIds": [
+        "QA-02"
+      ]
+    },
+    {
+      "id": "AC-03",
+      "source": "requirements.md#AC-03",
+      "surface": "user-interface",
+      "evidenceKinds": [
+        "interaction"
+      ],
+      "checkIds": [
+        "QA-03"
+      ]
+    },
+    {
+      "id": "AC-04",
+      "source": "requirements.md#AC-04",
+      "surface": "user-interface",
+      "evidenceKinds": [
+        "interaction"
+      ],
+      "checkIds": [
+        "QA-04"
+      ]
+    },
+    {
+      "id": "AC-05",
+      "source": "requirements.md#AC-05",
+      "surface": "user-interface",
+      "evidenceKinds": [
+        "interaction",
+        "error-feedback"
+      ],
+      "checkIds": [
+        "QA-05"
+      ]
+    },
+    {
+      "id": "AC-06",
+      "source": "requirements.md#AC-06",
+      "surface": "user-interface",
+      "evidenceKinds": [
+        "runtime-render"
+      ],
+      "checkIds": [
+        "QA-06"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "checkId": "QA-01",
+      "type": "browser-ui",
+      "plan": [
+        {
+          "requirementId": "AC-01",
+          "kind": "runtime-render",
+          "action": "在已存在若干物料（其中至少一个当前库存低于安全库存）时打开首页，记录三个数值；新增一个物料，再通过一次出库使另一物料当前库存降至安全库存以下，再次查看首页。",
+          "expected": "物料总数等于物料条目数量；库存总量等于各物料当前库存之和；预警数量等于当前库存低于安全库存的物料数；上述变更后三个数值同步变为正确值。"
+        }
+      ]
+    },
+    {
+      "checkId": "QA-02",
+      "type": "browser-ui",
+      "plan": [
+        {
+          "requirementId": "AC-02",
+          "kind": "runtime-render",
+          "action": "打开物料列表，逐字段核对已有物料的展示；通过新增物料入口录入编码、名称、分类、安全库存与初始当前库存并提交；再用一个已存在的编码重复提交。",
+          "expected": "列表逐行展示五个字段且与数据一致；新物料提交后出现在列表中，各字段值正确；重复编码被拒绝并给出提示，列表不出现重复条目。"
+        },
+        {
+          "requirementId": "AC-02",
+          "kind": "interaction",
+          "action": "打开物料列表，逐字段核对已有物料的展示；通过新增物料入口录入编码、名称、分类、安全库存与初始当前库存并提交；再用一个已存在的编码重复提交。",
+          "expected": "列表逐行展示五个字段且与数据一致；新物料提交后出现在列表中，各字段值正确；重复编码被拒绝并给出提示，列表不出现重复条目。"
+        }
+      ]
+    },
+    {
+      "checkId": "QA-03",
+      "type": "browser-ui",
+      "plan": [
+        {
+          "requirementId": "AC-03",
+          "kind": "interaction",
+          "action": "在搜索输入中输入某物料编码（或名称、分类）的关键词；清除搜索后启用低库存筛选；再取消筛选。",
+          "expected": "搜索后列表仅显示匹配该关键词的物料；低库存筛选后列表仅显示当前库存低于安全库存的物料；取消筛选后恢复显示全部物料。"
+        }
+      ]
+    },
+    {
+      "checkId": "QA-04",
+      "type": "browser-ui",
+      "plan": [
+        {
+          "requirementId": "AC-04",
+          "kind": "interaction",
+          "action": "记录某物料当前库存原值；在入库登记中选择该物料、填写数量并提交；查看该物料的当前库存与库存流水。",
+          "expected": "该物料当前库存 = 原值 + 入库数量；库存流水中新增一条类型为\"入库\"的记录，包含该物料、入库数量与发生时间。"
+        }
+      ]
+    },
+    {
+      "checkId": "QA-05",
+      "type": "browser-ui",
+      "plan": [
+        {
+          "requirementId": "AC-05",
+          "kind": "interaction",
+          "action": "记录某物料当前库存原值；在出库登记中选择该物料、填写不超过当前库存的数量并提交，查看库存与流水；再填写一个超过当前库存的数量提交。",
+          "expected": "正常出库后当前库存 = 原值 − 出库数量，流水新增一条类型为\"出库\"的记录（含物料、数量、时间）；超量提交被阻止并出现明确提示，当前库存保持原值且不产生新流水。"
+        },
+        {
+          "requirementId": "AC-05",
+          "kind": "error-feedback",
+          "action": "记录某物料当前库存原值；在出库登记中选择该物料、填写不超过当前库存的数量并提交，查看库存与流水；再填写一个超过当前库存的数量提交。",
+          "expected": "正常出库后当前库存 = 原值 − 出库数量，流水新增一条类型为\"出库\"的记录（含物料、数量、时间）；超量提交被阻止并出现明确提示，当前库存保持原值且不产生新流水。"
+        }
+      ]
+    },
+    {
+      "checkId": "QA-06",
+      "type": "browser-ui",
+      "plan": [
+        {
+          "requirementId": "AC-06",
+          "kind": "runtime-render",
+          "action": "先后完成至少一次入库和一次出库后，打开库存流水的查看入口。",
+          "expected": "能看到对应的入库与出库流水记录，四个字段完整，物料与数量与实际登记一致。"
+        }
+      ]
+    }
+  ]
+}
