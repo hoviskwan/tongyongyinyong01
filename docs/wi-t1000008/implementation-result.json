@@ -1,0 +1,29 @@
+{
+  "status": "completed",
+  "url": "http://localhost:5173/",
+  "verification": [
+    {
+      "checkId": "unit-tests",
+      "command": "npm test",
+      "workdir": ".",
+      "status": "passed",
+      "exitCode": 0,
+      "evidence": "vitest run: Test Files 1 passed (1), Tests 14 passed (14)；覆盖新增物料与重复编码拒绝、入库/出库更新库存与生成流水、出库超量阻止后库存与流水不变、统计口径、搜索与低库存筛选"
+    },
+    {
+      "checkId": "build",
+      "command": "npm run build",
+      "workdir": ".",
+      "status": "passed",
+      "exitCode": 0,
+      "evidence": "vite build: 37 modules transformed, built in 210ms, dist/ 产物生成（JS 156.62 kB gzip 50.58 kB, CSS 6.00 kB gzip 1.80 kB）"
+    },
+    {
+      "checkId": "dev-server",
+      "command": "npm run dev",
+      "workdir": ".",
+      "status": "passed",
+      "evidence": "Vite v5.4.21 ready in 71 ms，预览地址 http://localhost:5173/（注册后台作业运行中）"
+    }
+  ]
+}

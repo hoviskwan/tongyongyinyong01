@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 2,
+  "receiptId": "implementation:3",
+  "receiptType": "implementation-report",
+  "specId": "general-application-development-spec",
+  "graphRevision": 5,
+  "actionId": "implementation",
+  "inputRevision": 2,
+  "stateVersion": 3,
+  "outcome": "passed",
+  "contentHash": "sha256:3a2d2ea99f20bab08f895ca6ab2b1b5b361b214014927c0a6771d08f548bcb7b",
+  "createdAt": "2026-10-19T04:57:44.071Z",
+  "timing": {
+    "startedAt": "2026-10-19T04:51:12.451Z",
+    "completedAt": "2026-10-19T04:57:44.071Z",
+    "durationMs": 391620
+  },
+  "artifacts": [
+    {
+      "path": "docs/wi-t1000008/implementation-report.md",
+      "bytes": 5653,
+      "sha256": "sha256:1b57265e34bc1e71dcc18b8fdc36531262b373c293c0d1918504b99a62e5f436",
+      "title": "轻量库存管理应用 · 实现报告"
+    }
+  ],
+  "url": "http://localhost:5173/",
+  "verification": [
+    {
+      "checkId": "unit-tests",
+      "command": "npm test",
+      "workdir": ".",
+      "status": "passed",
+      "exitCode": 0,
+      "evidence": "vitest run: Test Files 1 passed (1), Tests 14 passed (14)；覆盖新增物料与重复编码拒绝、入库/出库更新库存与生成流水、出库超量阻止后库存与流水不变、统计口径、搜索与低库存筛选"
+    },
+    {
+      "checkId": "build",
+      "command": "npm run build",
+      "workdir": ".",
+      "status": "passed",
+      "exitCode": 0,
+      "evidence": "vite build: 37 modules transformed, built in 210ms, dist/ 产物生成（JS 156.62 kB gzip 50.58 kB, CSS 6.00 kB gzip 1.80 kB）"
+    },
+    {
+      "checkId": "dev-server",
+      "command": "npm run dev",
+      "workdir": ".",
+      "status": "passed",
+      "evidence": "Vite v5.4.21 ready in 71 ms，预览地址 http://localhost:5173/（注册后台作业运行中）"
+    },
+    {
+      "checkId": "implementation:application-route",
+      "status": "passed",
+      "applicationProfile": {
+        "applicationType": "simple-frontend",
+        "routeId": "inline",
+        "sha256": "sha256:3f98e6e1afef451bf58a672b22c25afaa47fb61629e25aff17e506fccdffed8b",
+        "path": ".expert-team/work-items/wi-t1000008/spec-state.json#/applicationProfile"
+      }
+    }
+  ]
+}
